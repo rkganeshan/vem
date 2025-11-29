@@ -22,7 +22,6 @@ A robust and scalable backend system for managing virtual events with comprehens
 - [Environment Variables](#-environment-variables)
 - [Usage Examples](#-usage-examples)
 - [Troubleshooting](#-troubleshooting)
-- [Contributing](#-contributing)
 - [License](#-license)
 
 ---
