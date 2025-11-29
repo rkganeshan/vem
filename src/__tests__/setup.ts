@@ -1,0 +1,35 @@
+import mongoose from "mongoose";
+import { MongoMemoryServer } from "mongodb-memory-server";
+
+let mongoServer: MongoMemoryServer;
+
+/**
+ * Connect to in-memory database for testing
+ */
+export const connectTestDB = async (): Promise<void> => {
+  mongoServer = await MongoMemoryServer.create();
+  const mongoUri = mongoServer.getUri();
+
+  await mongoose.connect(mongoUri);
+};
+
+/**
+ * Close database connection and stop server
+ */
+export const closeTestDB = async (): Promise<void> => {
+  await mongoose.connection.dropDatabase();
+  await mongoose.connection.close();
+  if (mongoServer) {
+    await mongoServer.stop();
+  }
+};
+
+/**
+ * Clear all collections
+ */
+export const clearTestDB = async (): Promise<void> => {
+  const collections = mongoose.connection.collections;
+  for (const key in collections) {
+    await collections[key].deleteMany({});
+  }
+};
